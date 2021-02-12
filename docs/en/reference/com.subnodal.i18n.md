@@ -36,7 +36,7 @@
 
 **Parameters:**
 * **`string`** (`String`): String to translate into current locale
-* **`argumentsLookup`** (`*`): List of arguments to apply in translation. Can either be an `Array` or `Object`, but if another datatype is supplied, it will be used as argument `0`
+* **`args`** (`*`): List of arguments to apply in translation. Can either be an `Array` or `Object`, but if another datatype is supplied, it will be used as argument `0`
 * **`formatValues`** (`Boolean` = `true`): Whether to format arguments such as numbers or dates into the specified locale
 * **`formatValueOptions`** (`{String}`): A list of options to use when formatting the arguments
 
