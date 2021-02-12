@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>I18n Test</title>
+        <script src="https://cdn.subnodal.com/lib/submodules.min.js"></script>
+        <script src="https://cdn.subnodal.com/lib/subtest.min.js"></script>
+        <script src="/i18n.js"></script>
+        <script src="/i18n.test.js"></script>
+    </head>
+    <body></body>
+    <script>
+        var subTest = require("com.subnodal.subtest");
+        var test = require("com.subnodal.i18n.test");
+
+        subTest.runTestsOnWeb(test.tests);
+    </script>
+</html>

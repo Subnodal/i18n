@@ -36,7 +36,7 @@
 
 **Parameters:**
 * **`string`** (`String`): String to translate into current locale
-* **`arguments`** (`*`): List of arguments to apply in translation. Can either be an `Array` or `Object`, but if another datatype is supplied, it will be used as argument `0`
+* **`argumentsLookup`** (`*`): List of arguments to apply in translation. Can either be an `Array` or `Object`, but if another datatype is supplied, it will be used as argument `0`
 * **`formatValues`** (`Boolean` = `true`): Whether to format arguments such as numbers or dates into the specified locale
 * **`formatValueOptions`** (`{String}`): A list of options to use when formatting the arguments
 
@@ -52,6 +52,17 @@
 ## 🔡️ `Locale.code`
 `prop <String>`
 
+## ❄️️ `Locale.fromJson`
+`static method` · Generate a `Locale` instance by parsing a JSON locale definition object.
+
+
+If the JSON object is still in its string form, use `JSON.parse`
+to convert the string into its object form.
+
+**Parameters:**
+* **`code`** (`String`): Locale code in the format `ll_RR` where `ll` is two-letter language code and `RR` is two-letter region code
+* **`json`** (`{name: String, nameShort: String | undefined, textDirection: "ltr" | "rtl", strings: {String | {String}}}`): Locale definition to use
+
 ## 🔡️ `Locale.name`
 `prop <String>`
 
@@ -59,7 +70,7 @@
 `prop <String>`
 
 ## 🔡️ `Locale.strings`
-`prop <{TranslationString>}>` · Object of translation string keys and their associated `TranslationString` instances as values
+`prop <{TranslationString>}>` · Object of translation string keys and their associated `TranslationString` instances as values.
 
 ## 🔡️ `Locale.textDirection`
 `prop <textDirections.*>`
