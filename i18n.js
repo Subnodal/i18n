@@ -31,7 +31,7 @@ namespace("com.subnodal.i18n", function(exports) {
 
     /*
         @name TranslationError
-        @type class extends <Error>
+        @type class extends (global):Error
         An error that is thrown when a string could not be translated.
     */
     exports.TranslationError = class extends Error {
@@ -61,8 +61,8 @@ namespace("com.subnodal.i18n", function(exports) {
 
         /*
             @name TranslationString.simple
-            @prop static method
-            Generate a simple `TranslationString` object from a given string.
+            @type static method
+            Generate a simple `TranslationString` instance from a given string.
             @param string <String> The string to generate the `TranslationString` from
             @returns <TranslationString> The generated `TranslationString` instance
         */
@@ -78,8 +78,9 @@ namespace("com.subnodal.i18n", function(exports) {
 
         /*
             @name TranslationString.substitutive
-            @prop static method
-            Generate a simple `TranslationString` object from a given string with substitutive arguments.
+            @type static method
+            Generate a substitutive `TranslationString` instance from a given
+            string with substitutive arguments.
             @param string <String> The string to generate the `TranslationString` from
             @returns <TranslationString> The generated `TranslationString` instance
         */
@@ -97,6 +98,41 @@ namespace("com.subnodal.i18n", function(exports) {
             };
 
             return substitutiveTranslationString;
+        }
+
+        /*
+            @name TranslationString.conditional
+            @type static method
+            Generate a conditional substitutive `TranslationString` instance
+            from a given lookup object with conditions as keys and substitutive
+            strings as values.
+            @param lookup <{String}> The lookup object to generate the `TranslationString` from
+            @returns <TranslationString> The generated `TranslationString` instance
+        */
+        static conditional(lookup) {
+            var conditionalTranslationString = new exports.TranslationString();
+
+            conditionalTranslationString = function(args) {
+                for (var condition in lookup) {
+                    var substitutedCondition = String(condition);
+
+                    for (var arg in args) {
+                        substitutedCondition = substitutedCondition.split("{" + arg + "}").join(args[arg]);
+                    }
+
+                    if (eval(substitutedCondition)) {
+                        var substitutedString = lookup[condition];
+
+                        for (var arg in args) {
+                           substitutedString = substitutedString.split("{" + arg + "}").join(args[arg]);
+                        }
+
+                        return substitutedString;
+                    }
+                }
+
+                return undefined;
+            };
         }
     };
 
@@ -192,7 +228,7 @@ namespace("com.subnodal.i18n", function(exports) {
             @name I18n.formatValue
             Format a given value into a form appropriate for the given locale code
             @param data <*> Data value to format
-            @param options <{String} | {}> A list of options to use when formatting the value
+            @param options <{String} = {}> A list of options to use when formatting the value
             @param localeCode <String | null = null> Locale code in the format `ll_RR` where `ll` is two-letter language code and `RR` is two-letter region code. If `null`, then `I18n.localeCode` will be used
         */
         formatValue(data, options = {}, localeCode = null) {
